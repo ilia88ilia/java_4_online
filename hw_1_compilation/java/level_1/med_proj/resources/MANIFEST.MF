@@ -1,1 +1,2 @@
-Main-Class: ua.com.alevel.Hello
+Main-Class: ua.com.illia.Hello
+

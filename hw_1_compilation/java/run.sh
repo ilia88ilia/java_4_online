@@ -1,9 +1,9 @@
 #!/bin/sh
 
-echo 'run level_1'
+echo 'run level 1'
 
 echo 'run simple'
-cd ./java/level_1/simple
+cd ./level_1/simple
 javac Hi.java
 java Hi
 
@@ -36,15 +36,23 @@ javac -sourcepath ./src -d build/classes ./src/ua/com/illia/Hello.java
 jar cvfm build/jar/hello.jar resources/MANIFEST.MF -C build/classes .
 java -jar build/jar/hello.jar
 
-cd ../../..
+cd ../../
 
-./remove-class.sh
+echo 'run level 2 (include libs)'
 
+cd ./level_2
 
+echo 'run simple proj who contains external library (jar)'
+cd ./include_libs
+javac -sourcepath ./src -d build/classes/ -cp ./lib/JColor-5.5.1.jar src/ua/com/alevel/util/Message.java src/ua/com/alevel/Hello.java
+java -cp build/classes/:./lib/JColor-5.5.1.jar ua.com.alevel.Hello
 
+cd ../
 
+echo 'run create jar who contains external library (jar)'
+cd ./jar
+. ./run_jar.sh
 
+cd ../../
 
-
-
-
+. ./remove-class.sh

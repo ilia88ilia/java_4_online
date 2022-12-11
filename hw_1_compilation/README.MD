@@ -1,2 +1,2 @@
-## To start the programme run:##
-###run.sh###
+## To start the programme in the directory /java run: ##
+### run.sh ###

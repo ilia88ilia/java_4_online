@@ -16,7 +16,7 @@ public class SymbolSorter {
         for (int i = 0; i < chars.length; i++) {
             if (Character.isLetter(chars[i])) {
                 System.out.println(chars[i] + " - " + (s.lastIndexOf(chars[i]) - s.indexOf(chars[i]) + 1));
-                i += (s.lastIndexOf(chars[i]) - s.indexOf(chars[i]) + 1);
+                i += (s.lastIndexOf(chars[i]) - s.indexOf(chars[i]));
             }
         }
     }

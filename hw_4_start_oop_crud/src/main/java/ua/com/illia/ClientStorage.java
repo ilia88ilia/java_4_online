@@ -66,7 +66,7 @@ public class ClientStorage {
             } else {
                 System.out.println("The Last Client has Been Deleted");
                 System.out.println("Now the Database is Empty");
-                System.out.println("to Fill in the Database, Start the Programme Again");
+                System.out.println("To Fill in the Database, Start the Programme Again");
                 {
                     System.exit(0);
                 }

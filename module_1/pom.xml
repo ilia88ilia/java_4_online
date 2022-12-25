@@ -5,9 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ua.com.illia</groupId>
-    <artifactId>hw_4_start_oop_crud</artifactId>
+    <artifactId>module_1</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
     <properties>
         <java.version>17</java.version>
@@ -15,8 +14,9 @@
         <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
         <maven.shade.plugin.version>3.2.4</maven.shade.plugin.version>
     </properties>
+
     <build>
-        <finalName>hw_4_start_oop_crud</finalName>
+        <finalName>module_1</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

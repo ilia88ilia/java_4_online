@@ -7,12 +7,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class DbStorage {
+
     private static List<Owner> owners = new ArrayList<>();
     private static List<Pet> pets = new ArrayList<>();
 
     private DbStorage() {
     }
-
 
     public static void addOwner(Owner owner) {
         owner.setId(generateOwnerId());
@@ -26,23 +26,24 @@ public class DbStorage {
         }
         return id;
     }
-   public static Owner getOwner(String id) {
+
+    public static Owner getOwner(String id) {
         Owner owner = null;
-        for (int i = 0; i < owners.size(); i++) {
-            if (owners.get(i) != null) {
-                if (owners.get(i).getId().equals(id)) {
-                    owner = owners.get(i);
+        for (Owner value : owners) {
+            if (value != null) {
+                if (value.getId().equals(id)) {
+                    owner = value;
                     break;
                 }
             }
         }
         return owner;
-   }
+    }
 
     public static List<Owner> findAllOwners() {
         return owners.
                 stream().
-                sorted(Comparator.comparing(owner -> owner.getLastName()))
+                sorted(Comparator.comparing(Owner::getLastName))
                 .collect(Collectors.toList());
     }
 
@@ -61,10 +62,10 @@ public class DbStorage {
 
     public static Pet getPet(String id) {
         Pet pet = null;
-        for (int i = 0; i < pets.size(); i++) {
-            if (pets.get(i) != null) {
-                if (pets.get(i).getId().equals(id)){
-                    pet = pets.get(i);
+        for (Pet value : pets) {
+            if (value != null) {
+                if (value.getId().equals(id)) {
+                    pet = value;
                     break;
                 }
             }
@@ -75,7 +76,7 @@ public class DbStorage {
     public static List<Pet> findAllPetGroups() {
         return pets.
                 stream().
-                sorted(Comparator.comparing(pet -> pet.getName()))
+                sorted(Comparator.comparing(Pet::getName))
                 .collect(Collectors.toList());
     }
 
@@ -94,8 +95,7 @@ public class DbStorage {
             System.out.println();
             System.out.println("No pet groups Found with This Id");
             System.out.println();
-        }
-        else if (owner == null) {
+        } else {
             System.out.println();
             System.out.println("No owner Found with This Id");
             System.out.println();
@@ -125,10 +125,10 @@ public class DbStorage {
             Set<String> pets = owner.getPetIdList();
             pets.remove(petId);
             Pet pet = getPet(petId);
-            if (pet == null){
-              System.out.println();
-              System.out.println("No pet groups Found with This Id");
-              System.out.println();
+            if (pet == null) {
+                System.out.println();
+                System.out.println("No pet groups Found with This Id");
+                System.out.println();
             } else {
                 Set<String> owners = pet.getOwnerIdList();
                 owners.remove(ownerId);
@@ -138,6 +138,7 @@ public class DbStorage {
             }
         }
     }
+
     public static void deleteOwner(String ownerId) {
         Owner owner = getOwner(ownerId);
         if (owner == null) {
@@ -158,7 +159,7 @@ public class DbStorage {
 
     public static void deleteOnlyOwnerFromPet(String ownerId, String petId) {
         Pet pet = getPet(petId);
-        if (pet == null){
+        if (pet == null) {
             System.out.println();
             System.out.println("No pet groups Found with This Id");
             System.out.println();
@@ -168,10 +169,9 @@ public class DbStorage {
         }
     }
 
-
     public static void deletePet(String petId) {
-            Pet pet = getPet(petId);
-        if (pet == null){
+        Pet pet = getPet(petId);
+        if (pet == null) {
             System.out.println();
             System.out.println("No pet groups Found with This Id");
             System.out.println();

@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public class OwnerInterface {
+
     public void start() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println();
@@ -20,6 +21,7 @@ public class OwnerInterface {
             crud(reader,select);
         }
     }
+
     public void menu() {
         System.out.println("..........................................");
         System.out.println("Crete Owner........................Enter 1");
@@ -43,6 +45,7 @@ public class OwnerInterface {
         System.out.println("------------------------------------------");
         System.out.println("ENTER :");
     }
+
     private void crud(BufferedReader reader, String select) throws IOException {
         switch (select) {
             case "1" : createOwner(reader); break;
@@ -62,10 +65,9 @@ public class OwnerInterface {
         }
         menu();
     }
+
     private void createOwner(BufferedReader reader) throws IOException {
-
         Owner owner = new Owner();
-
         System.out.println();
         System.out.println("Enter the First Name");
         System.out.println();
@@ -112,6 +114,7 @@ public class OwnerInterface {
         System.out.println("Owner Creation was SUCCESSFUL )))");
         System.out.println();
     }
+
     private void updateOwner(BufferedReader reader) throws IOException {
         System.out.println();
         System.out.println("To Update the Owner");
@@ -166,6 +169,7 @@ public class OwnerInterface {
             System.out.println();
         }
     }
+
     private void findOwnerById(BufferedReader reader) throws IOException {
         System.out.println();
         System.out.println("To Find the Owner by id");
@@ -180,16 +184,16 @@ public class OwnerInterface {
             System.out.println();
         }
     }
+
     private void findAllOwners(){
         List<Owner> owners = DbStorage.findAllOwners();
         System.out.println();
         System.out.println("Owners of Data Base " + owners);
         System.out.println();
     }
+
     private void createPetGroup(BufferedReader reader) throws IOException {
-
         Pet pet = new Pet();
-
         System.out.println();
         System.out.println("Create Pet Group");
         System.out.println("Please enter name");
@@ -207,6 +211,7 @@ public class OwnerInterface {
         System.out.println("Pet Group Creation was SUCCESSFUL )))");
         System.out.println();
     }
+
     private void updatePetGroup(BufferedReader reader) throws IOException {
         System.out.println();
         System.out.println("To Update the Pet Group");
@@ -238,6 +243,7 @@ public class OwnerInterface {
             System.out.println();
         }
     }
+
     private void findPetGroupById(BufferedReader reader) throws IOException {
         System.out.println();
         System.out.println("To Find the Pet Group by id");
@@ -254,12 +260,14 @@ public class OwnerInterface {
             System.out.println();
         }
     }
+
     private void findAllPetGroups(){
         List<Pet> pets = DbStorage.findAllPetGroups();
         System.out.println();
         System.out.println("Pet Groups " + pets);
         System.out.println();
     }
+
     private void attachOwnerToPetGroup(BufferedReader reader) throws IOException {
         System.out.println();
         System.out.println("To Attach the Owner to Pet Group");
@@ -270,6 +278,7 @@ public class OwnerInterface {
         String ownerId = reader.readLine();
         DbStorage.addOwnerToPet(ownerId, petId);
     }
+
     private void findOwnerByPet(BufferedReader reader) throws IOException {
         System.out.println();
         System.out.println("To Find All Owners by Pet Group");
@@ -287,6 +296,7 @@ public class OwnerInterface {
             System.out.println();
         }
     }
+
     private void deleteOwnerFromPet(BufferedReader reader) throws IOException{
         System.out.println();
         System.out.println("To DELETE the Owner from Pet Group");
@@ -297,6 +307,7 @@ public class OwnerInterface {
         String petId = reader.readLine();
         DbStorage.deleteOwnerFromPet(ownerId, petId);
     }
+
     private void deleteOwner(BufferedReader reader) throws IOException {
         System.out.println();
         System.out.println("To DELETE the owner");
@@ -304,6 +315,7 @@ public class OwnerInterface {
         String ownerId = reader.readLine();
         DbStorage.deleteOwner(ownerId);
     }
+
     private void deletePet(BufferedReader reader) throws IOException {
         System.out.println();
         System.out.println("To DELETE a Pet Group");
@@ -311,7 +323,6 @@ public class OwnerInterface {
         String petId = reader.readLine();
         DbStorage.deletePet(petId);
     }
-
 
     private void stop() {
         System.exit(0);

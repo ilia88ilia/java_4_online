@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Pet extends BaseEntity {
+
     private String name;
     private Set<String> ownerIdList = new HashSet<>();
 
@@ -21,8 +22,8 @@ public class Pet extends BaseEntity {
         }
         return correctName;
     }
-    public Set<String> getOwnerIdList() { return ownerIdList; }
 
+    public Set<String> getOwnerIdList() { return ownerIdList; }
 
     @Override
     public String toString() {

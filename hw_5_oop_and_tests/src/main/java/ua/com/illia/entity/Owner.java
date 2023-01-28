@@ -4,12 +4,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Owner extends BaseEntity {
+
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private Set<String> petIdList = new HashSet<>();
-    public String getFirstName() { return firstName; }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
     public boolean setFirstName(String firstName) {
         boolean correctFirstName = false;
         if (firstName.matches(".*\\d.*")) {
@@ -22,7 +27,11 @@ public class Owner extends BaseEntity {
         }
         return correctFirstName;
     }
-    public String getLastName() { return lastName; }
+
+    public String getLastName() {
+        return lastName;
+    }
+
     public boolean setLastName(String lastName) {
         boolean correctLastName = false;
         if (lastName.matches(".*\\d.*")) {
@@ -36,7 +45,10 @@ public class Owner extends BaseEntity {
         return correctLastName;
     }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
+
     public boolean setEmail(String email) {
         boolean correctEmail = false;
         if (email.matches("^(.+)@(.+)$")) {
@@ -53,9 +65,10 @@ public class Owner extends BaseEntity {
     public String getPhone() {
         return phone;
     }
+
     public boolean setPhone(String phone) {
         boolean correctPhone = false;
-        if (phone.matches("^\\d{10}$")){
+        if (phone.matches("^\\d{10}$")) {
             this.phone = phone;
             correctPhone = true;
         } else {
@@ -66,7 +79,9 @@ public class Owner extends BaseEntity {
         return correctPhone;
     }
 
-    public Set<String> getPetIdList() { return petIdList; }
+    public Set<String> getPetIdList() {
+        return petIdList;
+    }
 
     @Override
     public String toString() {

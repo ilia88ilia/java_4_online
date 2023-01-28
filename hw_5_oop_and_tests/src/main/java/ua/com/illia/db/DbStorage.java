@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class DbStorage {
+
     private final List<Owner> owners = new ArrayList<>();
     private final List<Pet> pets = new ArrayList<>();
     private static DbStorage instance;

@@ -7,6 +7,7 @@ import ua.com.illia.entity.Pet;
 import java.util.List;
 
 public class OwnerPetDao {
+
     DbStorage dbStorage = DbStorage.getInstance();
 
     public void createOwner(Owner owner) {
@@ -56,6 +57,4 @@ public class OwnerPetDao {
     public void deAttachOwnerFromPet(String ownerId, String petId) {
         dbStorage.deAttachOwnerFromPet(ownerId, petId);
     }
-
-
 }

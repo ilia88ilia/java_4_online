@@ -1,209 +1,77 @@
 package ua.com.illia;
 
 import java.util.*;
+import java.util.function.Consumer;
 
-public class MatList<E extends Number> implements List<E> {
-    private final int SIZE = 10;
+public class MatList<T extends Number> implements List<T> {
+
+    private static final int SIZE = 10;
+    public Number[] array;
     int size;
-    private Object[] array = new Object[SIZE];
 
     public MatList() {
-        size = 0;
+        array = new Number[SIZE];
     }
 
-    public MatList(E[]... numbers) {
+    public MatList(T[]... numbers) {
+        for (T[] number : numbers)
+            this.array = number;
+    }
 
-        for (E[] number : numbers) {
-            add(number);
+    public MatList(T... numbers) {
+        array = numbers;
+        size = numbers.length;
+    }
+
+
+    @Override
+    public void add(int index, T element) {
+        if (index > size || index < 0) {
+            throw new IndexOutOfBoundsException(index);
+        }
+        add((T) null);
+        for (int i = size; i > index; i--) {
+            array[i] = array[i - 1];
+        }
+        array[index] = element;
+    }
+
+    @Override
+    public boolean add(T e) {
+        if (size == array.length) {
+            Number[] newArray = new Number[(int) (size * 1.5)];
+            System.arraycopy(array, 0, newArray, 0, size);
+            array = newArray;
+        }
+        array[size] = e;
+        size++;
+        return true;
+    }
+
+    public void add(T... e) {
+        for (T newArray : e) {
+            add(newArray);
         }
     }
 
-    public MatList(MatList... numbers) {
-
-        MatList newMatlist = new MatList();
-        if (numbers.length > 1)
-            for (int i = 0; i < numbers.length - 1; i++) {
-                for (int j = 0; j < numbers[i + 1].size(); j++) {
-                    numbers[i].add((E) numbers[i + 1].array[j]);
-                }
-                numbers[i + 1] = numbers[i];
-                newMatlist = numbers[i + 1];
-            }
-        else {
-            newMatlist = numbers[0];
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        for (Object number : c.toArray()) {
+            add((T) number);
         }
-        this.size = newMatlist.size;
-        this.array = Arrays.copyOf(newMatlist.array, newMatlist.size);
+        return true;
     }
 
-    public void add(E... numbers) {
-
-        for (int i = 0; i < numbers.length; i++) {
-            add(numbers[i]);
+    @Override
+    public boolean addAll(int index, Collection<? extends T> c) {
+        if (c == null)
+            throw new NoSuchElementException();
+        if (index < 0 && index >= size) return false;
+        Object[] numbers = c.toArray();
+        for (int i = index; i < numbers.length; i++) {
+            add((T) numbers[i]);
         }
-    }
-
-    public void join(MatList... ml) {
-
-        MatList newMatlist = new MatList(ml);
-
-        for (int i = 0; i < newMatlist.size(); i++) {
-            this.add((E) newMatlist.array[i]);
-        }
-    }
-
-    public void intersection(MatList... ml) {
-        for (MatList newMatlist : ml) {
-            this.retainAll(newMatlist);
-        }
-    }
-
-    public void sortDesc() {
-        Number[] s = new Number[size];
-        s = this.toArray();
-        Collections.sort(Arrays.asList(s), Collections.reverseOrder());
-        this.array = Arrays.copyOf(s, size);
-    }
-
-    public void sortDesc(E value) {
-        Number[] s = new Number[size];
-        s = this.toArray();
-        int fromIndex = this.indexOf(value);
-        int toIndex = this.size() - 1;
-        this.sortDesc(fromIndex, toIndex);
-    }
-
-    public void sortDesc(int fromIndex, int toIndex) {
-        Number[] s = new Number[toIndex - fromIndex + 1];
-        s = this.toArray(fromIndex, toIndex);
-        Collections.sort(Arrays.asList(s), Collections.reverseOrder());
-        int k = 0;
-        for (int i = fromIndex; i < toIndex + 1; i++) {
-            this.set(i, (E) s[k]);
-            k++;
-        }
-    }
-
-    public void sortAsc() {
-        Number[] s = new Number[size];
-        s = this.toArray();
-        Arrays.sort(s);
-        this.array = Arrays.copyOf(s, size);
-    }
-
-    public void sortAsc(E value) {
-        Number[] s = new Number[size];
-        s = this.toArray();
-        int fromIndex = this.indexOf(value);
-        int toIndex = this.size() - 1;
-        this.sortAsc(fromIndex, toIndex);
-    }
-
-    public void sortAsc(int fromIndex, int toIndex) {
-        Number[] s = new Number[toIndex - fromIndex + 1];
-        s = this.toArray(fromIndex, toIndex);
-        Arrays.sort(s);
-        int k = 0;
-        for (int i = fromIndex; i < toIndex + 1; i++) {
-            this.set(i, (E) s[k]);
-            k++;
-        }
-    }
-
-    public E get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
-        Number[] s = new Number[size];
-        s = this.toArray();
-        return (E) s[index];
-    }
-
-    public Number getMax() {
-        long[] m = new long[size];
-
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] instanceof Number) {
-                m[i] = ((Number) array[i]).longValue();
-            }
-        }
-        System.out.println("Max value in collection");
-        return (Number) Arrays.stream(m).max().getAsLong();
-    }
-
-    public Number getMin() {
-        long[] s = new long[size];
-
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] instanceof Number) {
-                s[i] = ((Number) array[i]).longValue();
-            }
-        }
-        System.out.println("Min value in collection");
-        return (Number) Arrays.stream(s).min().getAsLong();
-    }
-
-    public Number getAverage() {
-        double[] s = new double[size];
-
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] instanceof Number) {
-                s[i] = ((Number) array[i]).doubleValue();
-            }
-        }
-        System.out.println(Arrays.toString(s) + " size = " + size());
-        System.out.print(" Average: ");
-        return (Number) Arrays.stream(s).average().getAsDouble();
-    }
-
-    public Number getMedian() {
-        double[] s = new double[size];
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] instanceof Number) {
-                s[i] = ((Number) array[i]).doubleValue();
-            }
-        }
-        System.out.println(Arrays.toString(s) + " size = " + size());
-        Arrays.sort(s);
-        System.out.print(" Median: ");
-        if (size % 2 != 0)
-            return (Number) s[size / 2];
-        else {
-            return (Number) ((double) (s[(size - 1) / 2] + s[size / 2]) / 2.0);
-        }
-    }
-
-    public Number[] toArray() {
-        Number[] s = new Number[size];
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] instanceof Number) {
-                s[i] = (Number) array[i];
-            }
-        }
-        return s;
-    }
-
-    public Number[] toArray(int firstIndex, int lastIndex) {
-        Number[] s = new Number[lastIndex - firstIndex + 1];
-        for (int i = 0; i < s.length; i++) {
-
-            if (array[firstIndex + i] instanceof Number) {
-                s[i] = (Number) array[firstIndex + i];
-            }
-        }
-        return s;
-    }
-
-    public MatList cut(int firstIndex, int lastIndex) {
-        Number[] s = new Number[lastIndex - firstIndex + 1];
-        s = this.toArray(firstIndex, lastIndex);
-        MatList newMatList = new MatList();
-        newMatList.add(s);
-        return newMatList;
-    }
-
-    public void clear(Number[] numbers) {
-        this.removeAll(List.of(numbers));
+        return true;
     }
 
     @Override
@@ -217,144 +85,56 @@ public class MatList<E extends Number> implements List<E> {
     }
 
     @Override
-    public boolean contains(final Object o) {
-        for (int i = 0; i < size; i++) {
-            if (this.array[i].equals(o)) return true;
-        }
-        return false;
+    public boolean contains(Object o) {
+        return indexOf(o) >= 0;
     }
 
     @Override
-    public boolean retainAll(final Collection<?> c) {
-        int k = 0;
-        for (int i = k; i < size(); i++) {
-            if (!c.contains(array[i])) {
-                this.remove(array[i]);
-                i = i - 1;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return new MyIterator<>();
+    public Object[] toArray() {
+        return Arrays.copyOf(array, size);
     }
 
     @Override
     public <E> E[] toArray(E[] a) {
-        if (a.length < size) return (E[]) Arrays.copyOf(array, size, a.getClass());
+        if (a.length < size)
+            return (E[]) Arrays.copyOf(array, size, a.getClass());
         System.arraycopy(array, 0, a, 0, size);
         if (a.length > size)
             a[size] = null;
         return a;
-
-    }
-
-    @Override
-    public boolean add(E n) {
-        resize();
-        array[size] = n;
-        size++;
-        return true;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        for (int i = 0; i < size(); i++) {
-            if (array[i].equals(o)) {
-                this.remove(i);
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        for (final Object item : c) {
-            if (!this.contains(item)) return false;
-        }
+        for (Object v : c.toArray())
+            if (!contains(v))
+                return false;
         return true;
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
-        boolean flag = true;
-        for (E element : c) {
-            flag &= add(element);
+    public T get(int index) {
+        if (index > size || index < 0) {
+            throw new IndexOutOfBoundsException(index);
         }
-        return flag;
+        return (T) array[index];
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
-        int prevSize = size();
-        if (index < 0 || index > size())
-            throw new IndexOutOfBoundsException();
-        Iterator elementsIterator = c.iterator();
-        for (int i = index; i < index + c.size(); i++) {
-            add(i, (E) elementsIterator.next());
+    public T set(int index, T element) {
+        if (index > size || index < 0) {
+            throw new IndexOutOfBoundsException(index);
         }
-        return size() > prevSize;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        boolean flag = true;
-        for (Object obj : c) {
-            flag &= remove(obj);
-        }
-        return flag;
-    }
-
-    @Override
-    public void clear() {
-        for (int i = 0; i < size; i++) {
-            array[i] = null;
-        }
-        size = 0;
-    }
-
-    @Override
-    public E set(int index, E element) {
-        if (index < 0 || index >= size) {
-            System.out.println("The index is out of bounds");
-            System.exit(-1);
-        }
-        E oldObject = (E) array[index];
+        T value = (T) array[index];
         array[index] = element;
-        return oldObject;
-    }
-
-    @Override
-    public void add(int index, E element) {
-        if (index < 0 || index >= this.array.length) {
-            System.out.println("The index is out of bounds");
-            System.exit(-1);
-        }
-        resize();
-        System.arraycopy(array, index, array, index + 1, size - index);
-        array[index] = element;
-        ++size;
-    }
-
-    @Override
-    public E remove(int index) {
-        if (index < 0 || index >= this.array.length) {
-            System.out.println("The index is out of bounds");
-            System.exit(-1);
-        }
-        System.arraycopy(array, index + 1, array, index, size - index - 1);
-        array[--size] = null;
-        resize();
-        return (E) array[index];
+        return value;
     }
 
     @Override
     public int indexOf(Object o) {
+        Object[] objectIndex = array;
         for (int i = 0; i < size; i++) {
-            if (array[i].equals(o)) {
+            if (objectIndex[i].equals(o)) {
                 return i;
             }
         }
@@ -363,15 +143,16 @@ public class MatList<E extends Number> implements List<E> {
 
     @Override
     public int lastIndexOf(Object o) {
+        Object[] arrayIndex = array;
         if (o == null) {
             for (int i = size - 1; i >= 0; i--) {
-                if (array[i] == null) {
+                if (arrayIndex[i] == null) {
                     return i;
                 }
             }
         } else {
             for (int i = size - 1; i >= 0; i--) {
-                if (o.equals(array[i])) {
+                if (o.equals(arrayIndex[i])) {
                     return i;
                 }
             }
@@ -380,58 +161,273 @@ public class MatList<E extends Number> implements List<E> {
     }
 
     @Override
-    public ListIterator<E> listIterator() {
-        E[] copy = Arrays.copyOf((E[]) array, size);
+    public List<T> subList(int fromIndex, int toIndex) {
+        Object[] list = Arrays.copyOfRange(array, fromIndex, toIndex);
+        MatList newArray = new MatList();
+        for (int i = 0; i < list.length; i++) {
+            newArray.add((Number) list[i]);
+        }
+        return newArray;
+    }
+
+    public void join(MatList... ml) {
+        for (MatList joinList : ml) {
+            Object[] list = joinList.toArray();
+            for (int i = 0; i < list.length; i++) {
+                add((T) list[i]);
+            }
+        }
+    }
+
+    public void intersection(MatList... ml) {
+        for (MatList joinList : ml) {
+            Object[] list = array;
+            for (int i = 0; i < list.length; i++) {
+                if (!joinList.contains(list[i])) {
+                    list[i] = null;
+                }
+            }
+            clear();
+            for (int i = 0; i < list.length; i++) {
+                if (list[i] != null) {
+                    add((T) list[i]);
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        Object[] list = array;
+        for (int i = 0; i < size; i++) {
+            if (list[i].equals(o)) {
+                list[i] = null;
+                if ((size - 1) > i)
+                    System.arraycopy(list, i + 1, list, i, (size - 1) - i);
+                list[size - 1] = null;
+                size--;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public T remove(int index) {
+        if (index > size || index < 0) {
+            throw new IndexOutOfBoundsException(index);
+        }
+        Object[] list = array;
+        T e = (T) array[index];
+        if ((size - 1) > index)
+            System.arraycopy(list, index + 1, list, index, (size - 1) - index);
+        list[size - 1] = null;
+        size--;
+        return e;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        Object[] list = c.toArray();
+        Number[] number = this.array;
+        for (int i = 0; i < list.length; i++) {
+            for (int j = 0; j < number.length; j++)
+                if (list[i].equals(number[j])) {
+                    remove(number[j]);
+                }
+            this.array = number;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        Number[] number = new Number[c.size() - 1];
+        int k = 0;
+        for (int i = 0; i < size; i++) {
+            if (c.contains(array[i])) {
+                number[k] = array[i];
+                k++;
+                size--;
+            }
+        }
+        array = number;
+        return true;
+    }
+
+    @Override
+    public void clear() {
+        array = array;
+        size = 0;
+    }
+
+    public void sortDesc() {
+        Object[] list = this.toArray();
+        Collections.sort(Arrays.asList(list), Collections.reverseOrder());
+        this.array = (Number[]) Arrays.copyOf(list, size);
+    }
+
+    public void sortDesc(int firstIndex, int lastIndex) {
+        boolean sort;
+        do {
+            sort = false;
+            for (int i = firstIndex; i < lastIndex - 1; i++) {
+                if (array[i].intValue() < array[i + 1].intValue()) {
+                    Number temp = array[i];
+                    array[i] = array[i + 1];
+                    array[i + 1] = temp;
+                    sort = true;
+                }
+            }
+        } while (sort);
+    }
+
+    public void sortDesc(T number) {
+        if (indexOf(number) != -1)
+            sortDesc(indexOf(number), size);
+    }
+
+    public void sortAsc() {
+        Object[] s = this.toArray();
+        Arrays.sort(s);
+        this.array = (Number[]) Arrays.copyOf(s, size);
+    }
+
+    public void sortAsc(int firstIndex, int lastIndex) {
+        Object[] sortArray = this.toArray(firstIndex, lastIndex);
+        Arrays.sort(sortArray);
+        int k = 0;
+        for (int i = firstIndex; i < lastIndex + 1; i++) {
+            this.set(i, (T) sortArray[k]);
+            k++;
+        }
+    }
+
+    public void sortAsc(T value) {
+        int fromIndex = this.indexOf(value);
+        int toIndex = this.size() - 1;
+        this.sortAsc(fromIndex, toIndex);
+    }
+
+    public Number getMax() {
+        sortDesc();
+        return get(0);
+    }
+
+    public Number getMin() {
+        sortAsc();
+        return get(0);
+    }
+
+    public double getAverage() {
+        double number = 0.0;
+        for (int i = 0; i < size; i++) {
+            number += get(i).doubleValue();
+        }
+        return number / size;
+    }
+
+    public Number getMedian() {
+        sortAsc();
+        return get(size / 2);
+    }
+
+    public Object[] toArray(int firstIndex, int lastIndex) {
+        Object[] list = new Object[lastIndex - firstIndex + 1];
+        for (int i = 0; i < list.length; i++) {
+            if (array[firstIndex + i] instanceof Number) {
+                list[i] = array[firstIndex + i];
+            }
+        }
+        return list;
+    }
+
+    public MatList cut(int firstIndex, int lastIndex) {
+        Object[] list = Arrays.copyOfRange(array, firstIndex, lastIndex);
+        MatList newList = new MatList();
+        for (int i = 0; i < list.length; i++) {
+            newList.add((Number) list[i]);
+        }
+        return newList;
+    }
+
+    public void clear(Number[] number) {
+        removeAll(Arrays.stream(number).toList());
+    }
+
+    @Override
+    public java.util.Iterator<T> iterator() {
+        return new Iterator();
+    }
+
+    @Override
+    public ListIterator<T> listIterator() {
+        T[] copy = Arrays.copyOf((T[]) array, size);
         return Arrays.asList(copy).listIterator();
     }
 
     @Override
-    public ListIterator<E> listIterator(int index) {
+    public ListIterator<T> listIterator(int index) {
         return null;
     }
 
-    @Override
-    public List<E> subList(int fromIndex, int toIndex) {
-        if (fromIndex < 0 || toIndex >= size || fromIndex > toIndex) {
-            System.out.println("The index is out of bounds");
-            System.exit(-1);
-        }
-        Number[] s = new Number[size];
-        s = this.toArray();
-        E[] copy = (E[]) Arrays.copyOfRange(s, fromIndex, toIndex + 1);
-        return Arrays.asList(copy);
-    }
+    public class Iterator implements java.util.Iterator<T> {
+        int index;
+        int lastIndex;
 
-    private void resize() {
-        if (size >= array.length) {
-            Object[] bigger = new Object[array.length * 2];
-            System.arraycopy(array, 0, bigger, 0, array.length);
-            array = bigger;
+        Iterator() {
+        }
+
+        @Override
+        public boolean hasNext() {
+            return index != size;
+        }
+
+        @Override
+        public T next() {
+            int i = index;
+            if (i >= size)
+                throw new NoSuchElementException();
+            Object[] list = MatList.this.array;
+            if (i >= list.length)
+                throw new ConcurrentModificationException();
+            index = i + 1;
+            return (T) list[lastIndex = i];
+        }
+
+        @Override
+        public void remove() {
+            if (lastIndex < 0)
+                throw new IllegalStateException();
+            try {
+                MatList.this.remove(lastIndex);
+                index = lastIndex;
+                lastIndex = -1;
+            } catch (IndexOutOfBoundsException ex) {
+                throw new ConcurrentModificationException();
+            }
+        }
+
+        @Override
+        public void forEachRemaining(Consumer<? super T> action) {
+            Objects.requireNonNull(action);
+            final int size = MatList.this.size;
+            int i = index;
+            if (i < size) {
+                final T[] es = (T[]) array;
+                for (; i < size; i++)
+                    action.accept(es[i]);
+                index = i;
+                lastIndex = i - 1;
+            }
         }
     }
 
     @Override
     public String toString() {
-        return "MatList {" +
+        return "Result { " +
                 Arrays.toString(this.toArray()) +
-                "  size =  " + this.size +
-                '}';
+                " }";
     }
 
-    private class MyIterator<E> implements Iterator<E> {
-
-        private int current = 0;
-
-        @Override
-        public boolean hasNext() {
-            return this.current < size();
-        }
-
-        @Override
-        public E next() {
-            E value = (E) array[current++];
-            return value;
-        }
-    }
 }
-

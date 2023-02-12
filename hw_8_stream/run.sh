@@ -1,5 +1,5 @@
 . ./build.sh
 
-java -jar /target/hw_7_dictionary.jar
+java -jar /target/hw_8_stream.jar
 
 

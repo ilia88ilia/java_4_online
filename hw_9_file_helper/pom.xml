@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ua.com.illia</groupId>
-    <artifactId>hw_8_stream</artifactId>
+    <artifactId>hw_9_file_helper</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -16,7 +16,7 @@
     </properties>
 
     <build>
-        <finalName>hw_8_stream</finalName>
+        <finalName>hw_9_file_helper</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

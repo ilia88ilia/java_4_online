@@ -8,7 +8,7 @@ public class Dictionary<K, V> {
     int size = 0;
 
     public Dictionary() {
-        super();
+        super();// а это зачем?)
     }
 
     public int size() {

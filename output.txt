@@ -1,0 +1,14 @@
+Dnipro Uman
+6
+Lviv Odessa
+13
+Mykolaiv Kharkiv
+5
+Kharkiv Mykolaiv
+5
+Kryvyi_Rih Kryvyi_Rih
+0
+Uman Poltava
+8
+Zhytomyr Dnipro
+10

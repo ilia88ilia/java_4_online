@@ -1,54 +1,11 @@
 package ua.com.illia;
 
+import java.io.*;
+
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+    public static void main(String arg[]) throws IOException {
+
+        new Controller().start();
+
     }
 }
-
-//    Дан список городов. Каждый путь между городами имеет цену (целое положительное число).
-//    Задача - найти самый выгодный путь между двумя городами.
-//    Максимально возможная цена пути - 200000.
-//
-//        Данные условия необходимо считать из файла input.txt
-//        Результат надо записать в файл output.txt
-//
-//        Ввод
-//        n [количество городов <= 10000]
-//        NAME [имя города]
-//        p [количество соседей города NAME]
-//        nr cost [nr - индекс соседа NAME (начиная с 1)]
-//        [cost - стоимость пути]
-//        r [количество путей, которые надо найти <= 100]
-//        NAME1 NAME2 [NAME1 - начало пути, NAME2 - конец пути]
-//
-//        Вывод
-//        cost [минимальная стоимость пути от NAME1 до NAME2]
-//
-//        Пример
-//        Ввод:
-//        4
-//        gdansk
-//        2
-//        2 1
-//        3 3
-//        bydgoszcz
-//        3
-//        1 1
-//        3 1
-//        4 4
-//        torun
-//        3
-//        1 3
-//        2 1
-//        4 1
-//        warszawa
-//        2
-//        2 4
-//        3 1
-//        2
-//        gdansk warszawa
-//        bydgoszcz warszawa
-//        Вывод:
-//        3
-//        2

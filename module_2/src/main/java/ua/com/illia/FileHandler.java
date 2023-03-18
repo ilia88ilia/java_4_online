@@ -10,7 +10,6 @@ public class FileHandler {
     private static final Path inputTemplate = Paths.get("inputTemplate.txt");
     private static final Path output = Paths.get("output.txt");
 
-
     public void inputFileChanger(String select) throws IOException {
         if (select.equals("1")) {
             FileWriter writer = new FileWriter(output.toFile(), false);
@@ -24,7 +23,6 @@ public class FileHandler {
     }
 
     public void fileParser(Path path) {
-
         try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
             int size = Integer.parseInt(reader.readLine());
             Graph graph = new Graph(size);
@@ -46,7 +44,6 @@ public class FileHandler {
         } catch (Exception e) {
             System.out.println("Incorrect file input.txt");
         }
-
     }
 
     private void writeResult(String from, String to, int cost) throws IOException {
@@ -56,6 +53,4 @@ public class FileHandler {
         writer.flush();
         System.out.println(output);
     }
-
 }
-

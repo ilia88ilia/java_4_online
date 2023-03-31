@@ -1,11 +1,12 @@
 package ua.com.illia;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
-    }
-}
+import java.io.IOException;
 
-//    Створити CRUD application на базі вашого першого модуля
-//    але використовуючи вже базову архітектуру (controller, service, dao, entity)
-//    В якості джерела збереження даних - використовуємо базу даних MySQL та Hibernate, як ORM провідер
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        CrudController crudController = new CrudController();
+        crudController.start();
+    }
+
+}

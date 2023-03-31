@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Graph {
+
     private final Map<String, Integer> nodes = new TreeMap<>();
     private final int[][] evaluations;
 
@@ -38,14 +39,12 @@ public class Graph {
     private static int findMinCost(boolean[] visited, int[] costs) {
         int min = Integer.MAX_VALUE;
         int index = -1;
-
         for (int i = 0; i < visited.length; i++) {
             if (!visited[i] && costs[i] < min) {
                 min = costs[i];
                 index = i;
             }
         }
-
         return index;
     }
 

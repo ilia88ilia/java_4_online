@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 public class Controller {
 
     public void start() throws IOException {
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println();
         System.out.println("========pathfinder===pathfinder===WELCOME TO PATH_FINDER========");

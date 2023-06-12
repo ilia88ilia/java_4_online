@@ -1,0 +1,8 @@
+ua\com\illia\controller\OwnerPetController.class
+ua\com\illia\dao\OwnerPetDao.class
+ua\com\illia\entity\BaseEntity.class
+ua\com\illia\entity\Owner.class
+ua\com\illia\entity\Pet.class
+ua\com\illia\db\DbStorage.class
+ua\com\illia\Main.class
+ua\com\illia\service\OwnerPetService.class

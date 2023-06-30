@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/main.css" rel="stylesheet">
+    <title>Accounts</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <a th:href="@{'/users'}" th:type="button" class="btn btn-outline-dark button-back"> <<< Home</a>
+    <br>
+    <br>
+    <h4 class="caption" style="color:pink"> USER DETAILS </h4>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-sm table-hover">
+                <thead class="table-head">
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Balance
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Owner
+                    </th>
+                    <th>
+                        Transactions
+                    </th>
+                    <th>
+                        More info
+                    </th>
+                    <th>
+                        Transaction export
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="acc : ${accounts}">
+                    <td th:text="${acc.id}"></td>
+                    <td th:text="${acc.balance}"></td>
+                    <td th:text="${acc.name}"></td>
+                    <td th:text="${acc.user}"></td>
+                    <td th:text="${acc.transactionNumber}"></td>
+                    <td>
+                        <a th:href="@{'/accounts/' + ${acc.id}}" th:type="button" class="btn btn-dark">Details</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-dark" th:href="@{'/transactions/export/' + ${acc.id}}">Export</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

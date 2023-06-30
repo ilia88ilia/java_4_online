@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/main.css" rel="stylesheet">
+    <title>Users</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <a th:href="@{'/'}" th:type="button" class="btn btn-outline-dark button-back"> <<< Back</a>
+    <br>
+    <br>
+    <h2 class="caption" style="color:#5fbcde"> SELECT USER TO MANAGEMENT </h2>
+    <h3 class="caption" style="color:#4d8030"> SELECT USER TO MANAGEMENT </h3>
+    <h4 class="caption" style="color:#c25d23"> SELECT USER TO MANAGEMENT </h4>
+    <h5 class="caption" style="color:#855819"> SELECT USER TO MANAGEMENT </h5>
+    <h6 class="caption" style="color:#f7f7f5"> SELECT USER TO MANAGEMENT </h6>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <a th:href="@{/accounts}" th:type="button" class="btn btn-outline-dark button-new">Accounts</a>
+            <a th:href="@{/transactions}" th:type="button" class="btn btn-outline-dark button-new">Transactions</a>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm table-hover">
+                <thead class="table-head">
+                <tr>
+                    <th>
+                        First name
+                    </th>
+                    <th>
+                        Last name
+                    </th>
+                    <th>
+                        Created date
+                    </th>
+                    <th>
+                        Number <br>
+                        of  <br>
+                        Accounts
+                    </th>
+                    <th>
+                        Details
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="tab-body">
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.user.id}"></td>
+                    <td th:text="${user.user.firstName}"></td>
+                    <td th:text="${user.user.lastName}"></td>
+                    <td th:text="${user.user.created}"></td>
+                    <td th:text="${user.number}"></td>
+                    <td>
+                        <a th:href="@{'/users/' + ${user.user.id} }" th:type="button" class="btn button-select">Select</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

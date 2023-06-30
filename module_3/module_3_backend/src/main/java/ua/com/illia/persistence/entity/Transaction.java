@@ -1,29 +1,27 @@
 package ua.com.illia.persistence.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
+import ua.com.illia.persistence.types.TransactionType;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "transactions")
 public class Transaction extends BaseEntity {
+    @Column
+    private String description;
 
-    @Column(precision = 7, scale = 2)
-    private BigDecimal sum;
+    @Column(nullable = false)
+    private Long sum;
+
+    @Column(name = "transaction_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
 
     @ManyToOne
-    private Account fromAccount;
-
-    @ManyToOne
-    private Account toAccount;
-
+    private Account account;
     public Transaction() {
         super();
     }

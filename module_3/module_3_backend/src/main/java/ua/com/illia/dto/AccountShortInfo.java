@@ -8,6 +8,7 @@ import ua.com.illia.persistence.entity.Account;
 @Setter
 public class AccountShortInfo {
     private Long id;
+    private String iban;
     private Long balance;
     private String name;
     private Integer transactionNumber;
@@ -15,6 +16,7 @@ public class AccountShortInfo {
 
     public AccountShortInfo(Account account, Integer number) {
         this.id = account.getId();
+        this.iban = account.getIban();
         this.balance = account.getBalance();
         this.name = account.getName();
         this.transactionNumber = number;

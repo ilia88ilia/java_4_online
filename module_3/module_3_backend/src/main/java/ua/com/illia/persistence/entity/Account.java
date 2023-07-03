@@ -12,6 +12,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "accounts")
 public class Account extends BaseEntity {
+
+    @Column(nullable = false)
+    private String iban;
+
     @Column(nullable = false)
     private Long balance;
 

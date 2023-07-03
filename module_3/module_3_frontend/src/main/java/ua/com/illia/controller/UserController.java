@@ -3,9 +3,10 @@ package ua.com.illia.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ua.com.illia.api.UserApiService;
-import ua.com.illia.model.AccountPostModel;
 
 @Controller
 @AllArgsConstructor
@@ -13,35 +14,6 @@ import ua.com.illia.model.AccountPostModel;
 public class UserController {
 
     private final UserApiService userApiService;
-
-   /* @GetMapping("/new")
-    public String createUserMenu(Model model) {
-        model.addAttribute("user", new UserModel());
-        return "nep/user_new";
-    }*/
-
-   /* @PostMapping("/new")
-    public String createUser(@ModelAttribute UserModel user) {
-        if (!userApiService.create(user)) {
-            return "400";
-        }
-        return "redirect:/users";
-    }*/
-
-    @GetMapping("/{id}/new")
-    public String createAccountMenu(@PathVariable Long id, Model model) {
-        model.addAttribute("account", new AccountPostModel());
-        model.addAttribute("owner_id", id);
-        return "nep/account_new";
-    }
-
-    @PostMapping("/{id}/new")
-    public String createAccount(@PathVariable Long id, @ModelAttribute AccountPostModel account) {
-        if (!userApiService.createAccount(account, id)) {
-            return "400";
-        }
-        return "redirect:/users/" + id;
-    }
 
     @GetMapping
     public String findAll(Model model) {

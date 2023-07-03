@@ -12,6 +12,7 @@ import java.util.Date;
 public class AccountWithTransactionsDTO {
     private Long accId;
     private Date accCreated;
+    private String iban;
     private Long balance;
     private String name;
     private Long userId;
@@ -20,6 +21,7 @@ public class AccountWithTransactionsDTO {
     public AccountWithTransactionsDTO(Account account, Collection<TransactionShortInfo> transactions) {
         this.accId = account.getId();
         this.accCreated = account.getCreated();
+        this.iban = account.getIban();
         this.balance = account.getBalance();
         this.name = account.getName();
         this.userId = account.getUser().getId();

@@ -7,8 +7,7 @@ import lombok.Setter;
 @Setter
 public class AccountModel {
     private Long id;
-    private Integer balance;
-    private String name;
+    private String IBAN;
     private Integer transactionNumber;
     private String user;
 }

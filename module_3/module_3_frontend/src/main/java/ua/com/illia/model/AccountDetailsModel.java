@@ -11,6 +11,7 @@ import java.util.Date;
 public class AccountDetailsModel {
     private Long accId;
     private Date accCreated;
+    private String IBAN;
     private Integer balance;
     private String name;
     private Long userId;

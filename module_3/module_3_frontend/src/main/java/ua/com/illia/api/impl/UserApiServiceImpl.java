@@ -9,7 +9,7 @@ import ua.com.illia.api.UserApiService;
 import ua.com.illia.model.AccountPostModel;
 import ua.com.illia.model.UserDetailsModel;
 import ua.com.illia.model.UserModel;
-import ua.com.illia.model.UserWithAccNumberModel;
+import ua.com.illia.model.UserAccountModel;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -83,17 +83,17 @@ public class UserApiServiceImpl implements UserApiService {
     }
 
     @Override
-    public Collection<UserWithAccNumberModel> findAll() {
+    public Collection<UserAccountModel> findAll() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<UserWithAccNumberModel[]> responseEntity = restTemplate.exchange(
+        ResponseEntity<UserAccountModel[]> responseEntity = restTemplate.exchange(
                 apiUrl + "/users",
                 HttpMethod.GET,
                 null,
-                UserWithAccNumberModel[].class
+                UserAccountModel[].class
         );
 
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            UserWithAccNumberModel[] userModels = responseEntity.getBody();
+            UserAccountModel[] userModels = responseEntity.getBody();
             if (userModels != null) {
                 return List.of(userModels);
             }

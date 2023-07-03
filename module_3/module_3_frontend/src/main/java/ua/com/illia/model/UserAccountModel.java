@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserWithAccNumberModel {
+public class UserAccountModel {
     private UserModel user;
     private Integer number;
 }

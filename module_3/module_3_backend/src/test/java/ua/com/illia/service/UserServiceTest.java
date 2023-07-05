@@ -25,29 +25,24 @@ public class UserServiceTest {
 
     @Test
     @Transactional
-    public void testCreateValidUserData() {
+    public void testCreateCorrectUserData() {
         UserCreatedDTO createdDTO = new UserCreatedDTO();
-        createdDTO.setFirstName("Jon");
-        createdDTO.setLastName("Jonson");
-
+        createdDTO.setFirstName("Ping");
+        createdDTO.setLastName("Pong");
         int before = userService.findAll().size();
         userService.create(createdDTO);
         int after = userService.findAll().size();
-
         Assertions.assertEquals(before + 1, after);
     }
 
     @Test
     @Transactional
-    public void testCreateInvalidUserData() {
+    public void testCreateIncorrectUserData() {
         int before = userService.findAll().size();
-
         UserCreatedDTO createdDTO = new UserCreatedDTO();
         createdDTO.setFirstName("");
         createdDTO.setLastName("");
-
         Assertions.assertThrows(InvalidDataException.class, () -> userService.create(createdDTO));
-
         int after = userService.findAll().size();
         Assertions.assertEquals(before, after);
     }
@@ -56,46 +51,37 @@ public class UserServiceTest {
     @Transactional
     public void testFindAll() {
         int before = userService.findAll().size();
-
         User user1 = randomUser();
         userRepository.save(user1);
-
         User user2 = randomUser();
         userRepository.save(user2);
-
         int after = userService.findAll().size();
-
         Assertions.assertEquals(before + 2, after);
     }
 
     @Test
     @Transactional
-    public void testFindByIdValid() {
+    public void testFindByCorrectId() {
         User user = randomUser();
         userRepository.save(user);
-
         User foundUser = userService.findById(user.getId());
-
         Assertions.assertEquals(user.getId(), foundUser.getId());
         Assertions.assertEquals(user.getFirstName(), foundUser.getFirstName());
     }
 
     @Test
     @Transactional
-    public void testFindByIdInvalid() {
+    public void testFindByIncorrectId() {
         Assertions.assertThrows(EntityNotFoundException.class, () -> userService.findById(Long.MIN_VALUE));
     }
 
     @Test
     @Transactional
-    public void testUpdatedValid() {
+    public void testUpdatedCorrect() {
         User user = randomUser();
         userRepository.save(user);
-
         User user2 = randomUser();
-
         userService.update(user2, user.getId());
-
         User foundUser = userRepository.findById(user.getId()).orElse(null);
         Assertions.assertNotNull(foundUser);
         Assertions.assertEquals(user.getFirstName(), foundUser.getFirstName());
@@ -103,16 +89,13 @@ public class UserServiceTest {
 
     @Test
     @Transactional
-    public void testUpdatedInvalid() {
+    public void testUpdatedIncorrect() {
         User user = randomUser();
         userRepository.save(user);
-
         User user2 = new User();
         user2.setFirstName("");
         user2.setLastName("");
-
         Assertions.assertThrows(InvalidDataException.class, () -> userService.update(user2, user.getId()));
-
         User foundUser = userRepository.findById(user.getId()).orElse(null);
         Assertions.assertNotNull(foundUser);
         Assertions.assertEquals(user.getFirstName(), foundUser.getFirstName());
@@ -123,11 +106,9 @@ public class UserServiceTest {
     public void testDeleted() {
         User user = randomUser();
         userRepository.save(user);
-
         int before = userRepository.findAll().size();
         userService.delete(user.getId());
         int after = userRepository.findAll().size();
-
         User foundUser = userRepository.findById(user.getId()).orElse(null);
         Assertions.assertNull(foundUser);
         Assertions.assertEquals(before - 1, after);

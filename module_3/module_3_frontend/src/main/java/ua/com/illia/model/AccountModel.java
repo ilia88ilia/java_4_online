@@ -10,4 +10,6 @@ public class AccountModel {
     private String IBAN;
     private Integer transactionNumber;
     private String user;
+    private Long userId;
+
 }

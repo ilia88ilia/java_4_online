@@ -14,14 +14,14 @@
     <a th:href="@{'/users'}" th:type="button" class="btn btn-outline-dark button-back"> <<< Home</a>
     <br>
     <br>
-    <h4 class="caption" style="color:pink"> USER DETAILS </h4>
+    <h2 class="caption" style="color:#5fbcde"> User Details </h2>
     <br>
     <div class="card">
         <div class="card-header">
             <tr>
-                <h2>User:</h2>
                 <br>
-                <h3 th:text="${user_det.user.firstName} + '   ' + ${user_det.user.lastName}" style="color:blue"></h3>
+                <br>
+                <h4 class="caption" th:text="${user_det.user.firstName} + '   ' + ${user_det.user.lastName}" style="color:#f7f7f5"></h4>
                 <a th:href="@{'/transactions/new'}" th:type="button" class="btn btn-outline-dark button-new">New transaction</a>
             </tr>
         </div>

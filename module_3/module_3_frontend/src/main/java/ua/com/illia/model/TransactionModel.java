@@ -13,4 +13,5 @@ public class TransactionModel {
     private String type;
     private String accName;
     private Date created;
+    private Long accId;
 }

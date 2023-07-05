@@ -19,11 +19,11 @@ public class TransactionController {
         return "export_done";
     }
 
-    @GetMapping("/export")
+    /*@GetMapping("/export")
     public String exportAll() {
         transactionApiService.exportAll();
         return "export_done";
-    }
+    }*/
 
     @GetMapping("/new")
     public String createTransactionMenu(Model model) {
@@ -36,7 +36,7 @@ public class TransactionController {
         if (!transactionApiService.create(transaction)) {
             return "400";
         }
-        return "redirect:/transactions";
+        return "redirect:/users";
     }
 
     @GetMapping

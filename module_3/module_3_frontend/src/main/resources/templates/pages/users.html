@@ -14,21 +14,16 @@
     <a th:href="@{'/'}" th:type="button" class="btn btn-outline-dark button-back"> <<< Back</a>
     <br>
     <br>
-    <h2 class="caption" style="color:#5fbcde"> SELECT USER TO MANAGEMENT </h2>
-    <h3 class="caption" style="color:#4d8030"> SELECT USER TO MANAGEMENT </h3>
-    <h4 class="caption" style="color:#c25d23"> SELECT USER TO MANAGEMENT </h4>
-    <h5 class="caption" style="color:#855819"> SELECT USER TO MANAGEMENT </h5>
-    <h6 class="caption" style="color:#f7f7f5"> SELECT USER TO MANAGEMENT </h6>
+    <h2 class="caption" style="color:#5fbcde"> Client List and Number of Accounts </h2>
     <br>
     <div class="card">
-        <div class="card-header">
-            <a th:href="@{/accounts}" th:type="button" class="btn btn-outline-dark button-new">Accounts</a>
-            <a th:href="@{/transactions}" th:type="button" class="btn btn-outline-dark button-new">Transactions</a>
-        </div>
         <div class="card-body">
             <table class="table table-sm table-hover">
                 <thead class="table-head">
                 <tr>
+                    <th>
+                        ID
+                    </th>
                     <th>
                         First name
                     </th>
@@ -39,8 +34,6 @@
                         Created date
                     </th>
                     <th>
-                        Number <br>
-                        of  <br>
                         Accounts
                     </th>
                     <th>

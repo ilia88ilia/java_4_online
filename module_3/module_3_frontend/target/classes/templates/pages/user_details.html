@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/main.css" rel="stylesheet">
+    <title>User details</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <a th:href="@{'/users'}" th:type="button" class="btn btn-outline-dark button-back"> <<< Home</a>
+    <br>
+    <br>
+    <h2 class="caption" style="color:#5fbcde"> User Details </h2>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <tr>
+                <br>
+                <br>
+                <h4 class="caption" th:text="${user_det.user.firstName} + '   ' + ${user_det.user.lastName}" style="color:#f7f7f5"></h4>
+                <a th:href="@{'/transactions/new'}" th:type="button" class="btn btn-outline-dark button-new">New transaction</a>
+            </tr>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <table class="table table-sm table-hover">
+                    <thead class="table-head">
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            IBAN
+                        </th>
+                        <th>
+                            Transactions
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab-body">
+                    <tr th:each="acc : ${user_det.accounts}">
+                        <td th:text="${acc.id}"></td>
+                        <td th:text="${acc.IBAN}"></td>
+                        <td th:text="${acc.transactionNumber}"></td>
+                        <td>
+                            <a th:href="@{'/accounts/' + ${acc.id} }" th:type="button" class="btn button-select">More Info</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

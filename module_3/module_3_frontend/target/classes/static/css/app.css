@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,body {
+    background: url('/images/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+
+.navbar {
+    background-color: rgba(0,0,0,0.1);
+}

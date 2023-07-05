@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ua.com.illia.exception.InvalidDataException;
+import ua.com.illia.exception.IncorrectDataException;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -15,8 +15,8 @@ public class ApiExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
 
-    @ExceptionHandler({InvalidDataException.class})
-    public ResponseEntity<String> handleInvalidDataException(InvalidDataException exception) {
+    @ExceptionHandler({IncorrectDataException.class})
+    public ResponseEntity<String> handleInvalidDataException(IncorrectDataException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 

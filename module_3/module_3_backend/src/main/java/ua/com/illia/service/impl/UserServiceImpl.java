@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.illia.dto.UserCreatedDTO;
-import ua.com.illia.exception.InvalidDataException;
+import ua.com.illia.exception.IncorrectDataException;
 import ua.com.illia.persistence.entity.User;
 import ua.com.illia.persistence.repository.UserRepository;
 import ua.com.illia.service.AccountService;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity doesn't exist"));
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not Found"));
     }
 
     @Transactional
@@ -61,16 +61,16 @@ public class UserServiceImpl implements UserService {
 
     private void validateUserId(Long id) {
         if (userRepository.findById(id).isEmpty()) {
-            throw new EntityNotFoundException("Entity doesn't exist");
+            throw new EntityNotFoundException("Not Found");
         }
     }
 
     private void validateUserEntity(User entity) {
         if (entity.getFirstName() == null || entity.getFirstName().equals("")) {
-            throw new InvalidDataException("Invalid name, try again");
+            throw new IncorrectDataException("Incorrect First Name");
         }
         if (entity.getLastName() == null || entity.getLastName().equals("")) {
-            throw new InvalidDataException("Invalid lastname, try again");
+            throw new IncorrectDataException("Incorrect Last Name");
         }
     }
 }

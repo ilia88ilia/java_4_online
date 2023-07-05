@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/main.css" rel="stylesheet">
+    <title>Transaction Details</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <a th:href="@{'/users'}" th:type="button" class="btn btn-outline-dark button-back"> <<< Home</a>
+    <br>
+    <br>
+    <h2 class="caption" style="color:#5fbcde"> Transaction Details </h2>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <a th:href="@{'/accounts/' + ${transaction.accId} }" th:type="button"
+               class="btn btn-outline-dark button-new">Account info</a>
+            <h3>About transaction</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <table class="table table-sm table-hover">
+                    <thead class="table-head">
+                    </thead>
+                    <tbody class="tab-body">
+                    <tr>
+                        <th>Transaction Id</th>
+                        <td th:text="${transaction.id}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Transaction Date</th>
+                        <td th:text="${transaction.created}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Summa USD</th>
+                        <td th:text="${transaction.sum}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Transaction Type</th>
+                        <td th:text="${transaction.type}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Transaction description</th>
+                        <td th:text="${transaction.description}"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>User</th>
+                        <td th:text="${transaction.userName}"></td>
+                    </tr>
+                    <tr>
+                        <th>Account name</th>
+                        <td th:text="${transaction.accName}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

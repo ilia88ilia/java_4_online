@@ -1,7 +1,7 @@
 package ua.com.illia.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import ua.com.illia.exception.InvalidDataException;
+import ua.com.illia.exception.IncorrectDataException;
 import ua.com.illia.persistence.entity.Account;
 import ua.com.illia.persistence.entity.User;
 import ua.com.illia.persistence.repository.AccountRepository;
@@ -48,7 +48,7 @@ public class AccountServiceTest {
         account.setBalance(Long.MIN_VALUE);
         account.setName("");
         int before = accountRepository.findAll().size();
-        Assertions.assertThrows(InvalidDataException.class, () -> accountService.create(account, user.getId()));
+        Assertions.assertThrows(IncorrectDataException.class, () -> accountService.create(account, user.getId()));
         int after = accountRepository.findAll().size();
         Assertions.assertEquals(before, after);
     }
@@ -60,7 +60,7 @@ public class AccountServiceTest {
         account.setBalance(Long.MIN_VALUE);
         account.setName("");
         int before = accountRepository.findAll().size();
-        Assertions.assertThrows(InvalidDataException.class, () -> accountService.create(account, Long.MIN_VALUE));
+        Assertions.assertThrows(IncorrectDataException.class, () -> accountService.create(account, Long.MIN_VALUE));
         int after = accountRepository.findAll().size();
         Assertions.assertEquals(before, after);
     }
@@ -94,7 +94,7 @@ public class AccountServiceTest {
         Account account2 = new Account();
         account2.setName("");
         account2.setBalance(0L);
-        Assertions.assertThrows(InvalidDataException.class, () -> accountService.update(account2, account.getId()));
+        Assertions.assertThrows(IncorrectDataException.class, () -> accountService.update(account2, account.getId()));
         Optional<Account> found = accountRepository.findById(account2.getId());
         Assertions.assertTrue(found.isEmpty());
         Assertions.assertEquals(account.getName(), accountRepository.findById(account.getId()).get().getName());

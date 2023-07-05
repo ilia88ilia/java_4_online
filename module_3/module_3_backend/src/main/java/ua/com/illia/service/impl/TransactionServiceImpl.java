@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.illia.dto.TransactionCreatedDTO;
-import ua.com.illia.exception.InvalidDataException;
+import ua.com.illia.exception.IncorrectDataException;
 import ua.com.illia.persistence.entity.Account;
 import ua.com.illia.persistence.entity.Transaction;
 import ua.com.illia.persistence.repository.AccountRepository;
@@ -26,12 +26,12 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
-    private static final String[] HEADER = {"Transaction ID", "Type", "Amount", "Account ID", "Description", "Created"};
+    private static final String[] HEADER = {" Transaction ID ", " Type ", " Sum ", " Account ID ", " Description ", " Created "};
 
     @Transactional
     public void exportByAccId(long id) {
         if (accountRepository.findById(id).isEmpty())
-            throw new InvalidDataException("Invalid id");
+            throw new IncorrectDataException("Incorrect id");
         makeCSV(transactionRepository.findAllByAccountId(id), id);
     }
 
@@ -66,9 +66,9 @@ public class TransactionServiceImpl implements TransactionService {
         Long senderBalance = accountRepository.findById(transactionCreatedDTO.getSenderAccId()).get().getBalance();
         Long receiverBalance = accountRepository.findById(transactionCreatedDTO.getReceiverAccId()).get().getBalance();
         Account sender = accountRepository.findById(transactionCreatedDTO.getSenderAccId())
-                .orElseThrow(() -> new EntityNotFoundException("Check your data and try again"));
+                .orElseThrow(() -> new EntityNotFoundException("Incorrect Data"));
         Account receiver = accountRepository.findById(transactionCreatedDTO.getReceiverAccId())
-                .orElseThrow(() -> new EntityNotFoundException("Check your data and try again"));
+                .orElseThrow(() -> new EntityNotFoundException("Incorrect Data"));
         Transaction transactionSender = new Transaction();
         transactionSender.setAccount(sender);
         transactionSender.setDescription(transactionCreatedDTO.getDescription());
@@ -78,7 +78,7 @@ public class TransactionServiceImpl implements TransactionService {
         transactionReceiver.setAccount(receiver);
         transactionReceiver.setTransactionType(TransactionType.PROFIT);
         transactionReceiver.setSum(transactionCreatedDTO.getSum());
-        transactionReceiver.setDescription("Replenishment from " +
+        transactionReceiver.setDescription("Replenishment by " +
                 sender.getUser().getFirstName() + " " +
                 sender.getUser().getLastName());
         sender.setBalance(senderBalance - transactionCreatedDTO.getSum());
@@ -91,22 +91,22 @@ public class TransactionServiceImpl implements TransactionService {
 
     private void validateTransaction(TransactionCreatedDTO transactionDTO) {
         if (transactionDTO.getSenderAccId() == null || transactionDTO.getReceiverAccId() == null) {
-            throw new EntityNotFoundException("Id == null");
+            throw new EntityNotFoundException("Id not Found");
         }
         if (accountRepository.findById(transactionDTO.getSenderAccId()).isEmpty()) {
-            throw new EntityNotFoundException("Sender does not exist");
+            throw new EntityNotFoundException("Sender not Exist");
         }
         if (accountRepository.findById(transactionDTO.getReceiverAccId()).isEmpty()) {
-            throw new EntityNotFoundException("Receiver does not exist");
+            throw new EntityNotFoundException("Receiver not Exist");
         }
         if (Objects.equals(transactionDTO.getReceiverAccId(), transactionDTO.getSenderAccId())) {
-            throw new InvalidDataException("Invalid data");
+            throw new IncorrectDataException("Incorrect Data");
         }
         if (transactionDTO.getSum() <= 0) {
-            throw new InvalidDataException("Invalid suma");
+            throw new IncorrectDataException("Incorrect Sum");
         }
         if (accountRepository.findById(transactionDTO.getSenderAccId()).get().getBalance() < transactionDTO.getSum()) {
-            throw new InvalidDataException("Insufficient funds");
+            throw new IncorrectDataException("Low Money");
         }
     }
 

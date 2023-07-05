@@ -3,7 +3,7 @@ package ua.com.illia.facade.Impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.illia.dto.AccountShortInfo;
-import ua.com.illia.dto.AccountWithTransactionsDTO;
+import ua.com.illia.dto.AccountTransactionsDTO;
 import ua.com.illia.dto.TransactionShortInfo;
 import ua.com.illia.facade.AccountFacade;
 import ua.com.illia.persistence.entity.Account;
@@ -33,8 +33,8 @@ public class AccountFacadeImpl implements AccountFacade {
     }
 
     @Override
-    public AccountWithTransactionsDTO findById(long id) {
-        return new AccountWithTransactionsDTO(
+    public AccountTransactionsDTO findById(long id) {
+        return new AccountTransactionsDTO(
                 accountService.findById(id),
                 transactionService.findAllByAccountId(id)
                         .stream()

@@ -2,7 +2,7 @@ package ua.com.illia.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import ua.com.illia.dto.TransactionCreatedDTO;
-import ua.com.illia.exception.InvalidDataException;
+import ua.com.illia.exception.IncorrectDataException;
 import ua.com.illia.persistence.entity.Account;
 import ua.com.illia.persistence.entity.User;
 import ua.com.illia.persistence.repository.AccountRepository;
@@ -72,7 +72,7 @@ public class TransactionServiceTest {
         transaction.setSum(500L);
         transaction.setDescription("Test");
         int before = transactionRepository.findAll().size();
-        Assertions.assertThrows(InvalidDataException.class, () -> transactionService.create(transaction));
+        Assertions.assertThrows(IncorrectDataException.class, () -> transactionService.create(transaction));
         int after = transactionRepository.findAll().size();
         Assertions.assertEquals(before, after);
     }
@@ -88,7 +88,7 @@ public class TransactionServiceTest {
         transaction.setSum((long) -500); // Positive values only
         transaction.setDescription("Test");
         int before = transactionRepository.findAll().size();
-        Assertions.assertThrows(InvalidDataException.class, () -> transactionService.create(transaction));
+        Assertions.assertThrows(IncorrectDataException.class, () -> transactionService.create(transaction));
         int after = transactionRepository.findAll().size();
         Assertions.assertEquals(before, after);
     }
@@ -104,7 +104,7 @@ public class TransactionServiceTest {
         transaction.setSum(Long.MAX_VALUE);
         transaction.setDescription("Test");
         int before = transactionRepository.findAll().size();
-        Assertions.assertThrows(InvalidDataException.class, () -> transactionService.create(transaction));
+        Assertions.assertThrows(IncorrectDataException.class, () -> transactionService.create(transaction));
         int after = transactionRepository.findAll().size();
         Assertions.assertEquals(before, after);
     }

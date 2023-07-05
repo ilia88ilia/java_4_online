@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class AccountWithTransactionsDTO {
+public class AccountTransactionsDTO {
     private Long accId;
     private Date accCreated;
     private String iban;
@@ -18,7 +18,7 @@ public class AccountWithTransactionsDTO {
     private Long userId;
     private Collection<TransactionShortInfo> transactions;
 
-    public AccountWithTransactionsDTO(Account account, Collection<TransactionShortInfo> transactions) {
+    public AccountTransactionsDTO(Account account, Collection<TransactionShortInfo> transactions) {
         this.accId = account.getId();
         this.accCreated = account.getCreated();
         this.iban = account.getIban();

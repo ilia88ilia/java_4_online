@@ -4,7 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.illia.exception.InvalidDataException;
+import ua.com.illia.exception.IncorrectDataException;
 import ua.com.illia.persistence.entity.Account;
 import ua.com.illia.persistence.repository.AccountRepository;
 import ua.com.illia.persistence.repository.TransactionRepository;
@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public Collection<Account> findByUserId(long id) {
         if (userRepository.findById(id).isEmpty()) {
-            throw new EntityNotFoundException("Entity not Found");
+            throw new EntityNotFoundException("Not Found");
         }
         Collection<Account> accounts = accountRepository.findAllByUserId(id);
         return Objects.requireNonNullElse(accounts, Collections.emptyList());
@@ -48,7 +48,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public Account findById(Long id) {
-        return accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity not Found"));
+        return accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not Found"));
     }
 
     @Transactional
@@ -62,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
     public void update(Account entity, Long id) {
         checkAccountData(entity);
         if (accountRepository.findById(id).isEmpty()) {
-            throw new EntityNotFoundException("Entity not Found");
+            throw new EntityNotFoundException("Not Found");
         } else {
             entity.setId(id);
             entity.setUser(accountRepository.findById(id).get().getUser());
@@ -74,7 +74,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void delete(Long id) {
         if (accountRepository.findById(id).isEmpty()) {
-            throw new EntityNotFoundException("Entity not Found");
+            throw new EntityNotFoundException("Not Found");
         } else {
             transactionRepository.findAllByAccountId(id).forEach(e -> transactionRepository.deleteById(e.getId()));
             accountRepository.deleteById(id);
@@ -83,10 +83,10 @@ public class AccountServiceImpl implements AccountService {
 
     private void checkAccountData(Account entity) {
         if (entity.getBalance() == null || entity.getBalance() < 0) {
-            throw new InvalidDataException("Incorrect Balance");
+            throw new IncorrectDataException("Incorrect Balance");
         }
         if (entity.getName() == null || entity.getName().equals("")) {
-            throw new InvalidDataException("Incorrect data");
+            throw new IncorrectDataException("Incorrect Data");
         }
     }
 }
